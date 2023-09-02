@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
 import Split from "react-split"
 import { nanoid } from "nanoid"
+import {onSnapshot} from "firebase/firestore"
  
 
 export default function App() {
