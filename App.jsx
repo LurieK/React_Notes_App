@@ -19,9 +19,12 @@ export default function App() {
         notes.find(note => note.id === currentNoteId) 
         || notes[0]
 
-    React.useEffect(() => {
-        localStorage.setItem("notes", JSON.stringify(notes))
-    }, [notes])
+    React.useEffect(()=> {
+        const unsubscribe = onSnapshot(notesCollection, function(snapshot){
+            console.log("things are changing")
+        })
+        return unsubscribe
+    }, [])
 
     function createNewNote() {
         const newNote = {
