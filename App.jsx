@@ -3,8 +3,8 @@ import Sidebar from "./components/Sidebar"
 import Editor from "./components/Editor"
 import Split from "react-split"
 import { nanoid } from "nanoid"
-import {onSnapshot, addDoc} from "firebase/firestore"
-import { notesCollection } from "./firebase"
+import {onSnapshot, addDoc, doc} from "firebase/firestore"
+import { notesCollection, db } from "./firebase"
 
 
 export default function App() {
@@ -54,8 +54,7 @@ export default function App() {
     }
 
     function deleteNote(noteId) {
-        
-        setNotes(oldNotes => oldNotes.filter(note => note.id !== noteId))
+        doc(db, )
     }
 
     return (
