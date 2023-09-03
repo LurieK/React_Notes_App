@@ -9,30 +9,33 @@ import { notesCollection, db } from "./firebase"
 
 export default function App() {
     const [notes, setNotes] = React.useState([])
-    
+    console.log("this is notes"+ notes)
     
     const [currentNoteId, setCurrentNoteId] = React.useState("")
-    console.log(currentNoteId)
+    console.log("this is the currentNoteId" +currentNoteId)
 
     const currentNote = 
         notes.find(note => note.id === currentNoteId) 
         || notes[0]
 
-   
+    const sortedNotes = notes.sort((a, b)=> b.updatedAt - a.updatedAt)
+
+    console.log("This is sortedNotes" +sortedNotes)
 
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, function(snapshot) {
             // Sync up our local notes array with the snapshot data
             const notesArr = snapshot.docs.map(doc => ({
                 ...doc.data(),
-                createdAt: '',
-                updatedAt: '',
                 id: doc.id
             }))
+            console.log("this is notesArr" +notesArr)
             setNotes(notesArr)
         })
         return unsubscribe
     }, [])
+
+    
 
     React.useEffect(()=> {
         if(!currentNoteId){
@@ -43,7 +46,8 @@ export default function App() {
     async function createNewNote() {
         const newNote = {
             body: "# Type your markdown note's title here",
-            createdAt: Date.now()
+            createdAt: Date.now(),
+            updatedAt: Date.now()
         }
         const newNoteRef = await addDoc(notesCollection, newNote)
         setCurrentNoteId(newNoteRef.id)
@@ -72,8 +76,8 @@ export default function App() {
                         className="split"
                     >
                         <Sidebar
-                            notes={notes}
                             currentNote={currentNote}
+                            notes={sortedNotes}
                             setCurrentNoteId={setCurrentNoteId}
                             newNote={createNewNote}
                             deleteNote={deleteNote}
