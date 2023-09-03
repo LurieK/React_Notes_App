@@ -22,6 +22,8 @@ export default function App() {
 
     console.log("This is sortedNotes" +sortedNotes)
 
+    const [tempNoteText, setTempNoteText] = React.useState('')
+
     React.useEffect(() => {
         const unsubscribe = onSnapshot(notesCollection, function(snapshot) {
             // Sync up our local notes array with the snapshot data
@@ -42,6 +44,12 @@ export default function App() {
             setCurrentNoteId(notes[0]?.id)
         }
     }, [notes])
+
+    React.useEffect(()=>{
+        if(currentNote){
+            setTempNoteText(currentNote.body)
+        }
+    },[currentNote])
 
     async function createNewNote() {
         const newNote = {
@@ -83,8 +91,8 @@ export default function App() {
                             deleteNote={deleteNote}
                         />
                         <Editor
-                            currentNote={currentNote}
-                            updateNote={updateNote}
+                            tempNoteText={tempNoteText}
+                            setTempNoteText={setTempNoteText}
                         />
                     
                     </Split>
