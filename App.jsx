@@ -54,7 +54,8 @@ export default function App() {
     }
 
     function deleteNote(noteId) {
-        doc(db, )
+        const docRef = doc(db, "notes", noteId )
+        
     }
 
     return (
